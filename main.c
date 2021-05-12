@@ -3,8 +3,8 @@
  * (c) 2021 Andrew V. Jones
  */
 
-#include <stdlib.h>
 #include <signal.h>
+#include <stdlib.h>
 
 /* some code that crashes */
 extern void crash(void);

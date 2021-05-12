@@ -123,6 +123,9 @@ void show_backtrace(void) {
     /* get the IP for the current stack */
     unw_get_reg(&cursor, UNW_REG_IP, &ip);
 
+    /* decrement the ip to the currently executing statement */
+    --ip;
+
     /* create a debug info object */
     DebugInfo di;
     DebugInfo_ctor(&di, &dis, (uintptr_t)ip);

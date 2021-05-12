@@ -11,12 +11,12 @@ The code was *heavily* inspired by Maxim Egorushkin's [C++ code](https://stackov
 If your code is compiled with `-g`, then you should get something like this:
 
 ```
-Source "/home/avj/clones/backward-c/handler.c" line 159 in handler
-Object "" at 0x7f1114540530 in __restore_rt
-Source "/home/avj/clones/backward-c/crash.c" line 5 in crash
-Source "/home/avj/clones/backward-c/main.c" line 17 in main
-Object "" at 0x7f111452ab25 in __libc_start_main
-Source "../sysdeps/x86_64/start.S" line 122 in _start
+Source "/home/avj/clones/backward-c/main.c" line 20 in handler
+Object "" at 0x7fd10a06352f in <unknown>
+Source "/home/avj/clones/backward-c/crash.c" line 10 in crash
+Source "/home/avj/clones/backward-c/main.c" line 36 in main
+Object "" at 0x7fd10a04db24 in __libc_start_main
+Source "../sysdeps/x86_64/start.S" line 120 in _start
 ```
 
 ## Usage
