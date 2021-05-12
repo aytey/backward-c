@@ -130,13 +130,13 @@ static void print_context(const char *path, int line_no, int context) {
 
         /* line we want gets the prefix */
         if (lines_read == adjusted_line_no) {
-          printf("%5s", ">");
+          fprintf(stderr, "%5s", ">");
         } else {
-          printf("%5s", " ");
+          fprintf(stderr, "%5s", " ");
         }
 
         /* print the line */
-        printf("%5d %s", lines_read, line);
+        fprintf(stderr, "%5d %s", lines_read, line);
       }
 
       /* if we're after the end, we can stop */
@@ -185,12 +185,12 @@ void show_backtrace(void) {
 
     /* what's the file + line? */
     if (di.file) {
-      printf("Source \"%s\" line %d ", di.file, di.line);
+      fprintf(stderr, "Source \"%s\" line %d ", di.file, di.line);
     } else {
-      printf("Object \"\" at 0x%lx ", di.ip);
+      fprintf(stderr, "Object \"\" at 0x%lx ", di.ip);
     }
 
-    printf("in %s\n", di.function);
+    fprintf(stderr, "in %s\n", di.function);
 
     if (di.file) {
       print_context(di.file, di.line, /* context */ 3);

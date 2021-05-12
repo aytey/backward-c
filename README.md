@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`backward-c` is a limited, bare-bones C "port" of [`backward-cpp`](https://github.com/bombela/backward-cpp).
+`backward-c` is a limited, bare-bones C "port" of [`backward-cpp`](https://github.com/bombela/backward-cpp). Its purpose is to print a stack-trace to `stderr`, along with the corresponding source code (if it can be located) for each frame.
 
 The code was *heavily* inspired by Maxim Egorushkin's [C++ code](https://stackoverflow.com/a/60713161) for working with `libdw`.
 
