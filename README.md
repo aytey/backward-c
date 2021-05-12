@@ -12,10 +12,31 @@ If your code is compiled with `-g`, then you should get something like this:
 
 ```
 Source "/home/avj/clones/backward-c/main.c" line 20 in handler
-Object "" at 0x7fd10a06352f in <unknown>
+        16   (void)sig;
+        17
+        18   /* show a backtrace */
+    >   19   show_backtrace();
+        20
+        21   /* teardown our application */
+        22   exit(1);
+Object "" at 0x7f5e2037d52f in <unknown>
 Source "/home/avj/clones/backward-c/crash.c" line 10 in crash
+         6
+         7 void crash() {
+         8   int *p = NULL;
+    >    9   *p = 10;
+        10 }
+        11
+        12 // EOF
 Source "/home/avj/clones/backward-c/main.c" line 36 in main
-Object "" at 0x7fd10a04db24 in __libc_start_main
+        32
+        33 int main(void) {
+        34   setup_handlers();
+    >   35   crash();
+        36   return 0;
+        37 }
+        38
+Object "" at 0x7f5e20367b24 in __libc_start_main
 Source "../sysdeps/x86_64/start.S" line 120 in _start
 ```
 
@@ -32,9 +53,9 @@ To use `backward-c`:
 
 There are currently a few deficiencies when compared to `backward-cpp`:
 
-* `backward-c` does not print the code for the stack-trace (but does give file/line)
 * `backward-c` only supports `libdw` and `libunwind`
-* `backward-c` does not show the object file (if the source cannot be identified with `libdw`)
+* `backward-c` does not show the name of a non-source file (e.g., if the source cannot be identified with `libdw`)
+* `backward-c` does not support "skipping" of `n` inner frames
 
 Pull requests are greatly welcomed to address any of the above!
 

@@ -100,6 +100,59 @@ static void DebugInfo_ctor(DebugInfo *di, DebugInfoSession *dis, uintptr_t ip) {
   }
 }
 
+static void print_context(const char *path, int line_no, int context) {
+  /* adjust the line number; users don't use zero-based line numbers */
+  int adjusted_line_no = line_no - 1;
+
+  /* how many lines before? */
+  int start = adjusted_line_no - context;
+
+  /* how many lines after? */
+  int end = adjusted_line_no + context;
+
+  /* how many lines have we read? */
+  int lines_read = 0;
+
+  /* open the file */
+  FILE *file = fopen(path, "r");
+
+  /* if the file exists ... */
+  if (file != NULL) {
+
+    /* line buffer */
+    char line[256];
+
+    /* read a line */
+    while (fgets(line, sizeof line, file) != NULL) {
+
+      /* if we're showing context */
+      if (lines_read >= start && lines_read <= end) {
+
+        /* line we want gets the prefix */
+        if (lines_read == adjusted_line_no) {
+          printf("%5s", ">");
+        } else {
+          printf("%5s", " ");
+        }
+
+        /* print the line */
+        printf("%5d %s", lines_read, line);
+      }
+
+      /* if we're after the end, we can stop */
+      if (lines_read >= end) {
+        break;
+      }
+
+      /* total lines read */
+      ++lines_read;
+    }
+
+    /* close the file */
+    fclose(file);
+  }
+}
+
 void show_backtrace(void) {
   /* uses libunwind to load the current stack, and uses libdw to show the debug
    * information */
@@ -138,6 +191,10 @@ void show_backtrace(void) {
     }
 
     printf("in %s\n", di.function);
+
+    if (di.file) {
+      print_context(di.file, di.line, /* context */ 3);
+    }
   }
 
   /* gracefully shutdown libdw */
